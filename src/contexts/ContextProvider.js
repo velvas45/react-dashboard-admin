@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const StateContext = createContext();
 
@@ -39,26 +39,37 @@ export const ContextProvider = ({ children }) => {
   };
 
   //   function for handle click navbar
-  const handleClick = (clicked) => {
+  const handleClick = (clicked) =>
     setIsClicked({ ...initialState, [clicked]: true });
-  };
+
+  // set initial data from localStorage
+  useEffect(() => {
+    const initMode = window.localStorage.getItem("themeMode");
+    const initColor = window.localStorage.getItem("colorMode");
+
+    setCurrentColor(initColor);
+    setCurrentMode(initMode);
+  }, []);
 
   return (
     <StateContext.Provider
       value={{
-        activeMenu,
-        setActiveMenu,
-        isClicked,
-        setIsClicked,
-        handleClick,
-        screenSize,
-        setScreenSize,
         currentColor,
         currentMode,
-        themeSettings,
-        setThemeSettings,
+        activeMenu,
+        screenSize,
+        setScreenSize,
+        handleClick,
+        isClicked,
+        initialState,
+        setIsClicked,
+        setActiveMenu,
+        setCurrentColor,
+        setCurrentMode,
         setMode,
         setColor,
+        themeSettings,
+        setThemeSettings,
       }}
     >
       {children}
