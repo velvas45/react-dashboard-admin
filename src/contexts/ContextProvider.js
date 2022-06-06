@@ -47,8 +47,10 @@ export const ContextProvider = ({ children }) => {
     const initMode = window.localStorage.getItem("themeMode");
     const initColor = window.localStorage.getItem("colorMode");
 
-    setCurrentColor(initColor);
-    setCurrentMode(initMode);
+    if (initMode && initColor) {
+      setCurrentColor(initColor);
+      setCurrentMode(initMode);
+    }
   }, []);
 
   return (
